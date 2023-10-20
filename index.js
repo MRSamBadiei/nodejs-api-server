@@ -12,7 +12,7 @@ app.get("/heros", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
-    res.status(200).json(dataToJs);
+    res.status(201).json(dataToJs);
   });
 });
 
