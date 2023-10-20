@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/heros", (req, res) => {
+  res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
     res.status(200).send(dataToJs);
@@ -20,6 +21,7 @@ app.get("/heros", (req, res) => {
 });
 
 app.post("/addHero", (req, res) => {
+  res.set({ "Transfer-Encdoing": "chunked" });
   if (
     req.body.name !== "" &&
     req.body.age !== "" &&
@@ -53,6 +55,7 @@ app.post("/addHero", (req, res) => {
 });
 
 app.delete("/heros/:id", (req, res) => {
+  res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
 
@@ -71,6 +74,7 @@ app.delete("/heros/:id", (req, res) => {
 });
 
 app.patch("/heros/:id", (req, res) => {
+  res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
     const findID = dataToJs.findIndex((e) => e.id == req.params.id);
@@ -95,6 +99,7 @@ app.patch("/heros/:id", (req, res) => {
 });
 
 app.put("/heros/:id", (req, res) => {
+  res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
     const findID = dataToJs.findIndex((e) => e.id == req.params.id);
