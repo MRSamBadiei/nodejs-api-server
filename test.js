@@ -1,3 +1,6 @@
+// npm install axios
+
+/*
 const axios = require("axios");
 
 axios
@@ -12,3 +15,4 @@ axios
   .catch((e) => {
     console.log(e);
   });
+*/

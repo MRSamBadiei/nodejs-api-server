@@ -1,25 +1,22 @@
 const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3000;
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use("/", express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
-});
-
+// GET
 app.get("/heros", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
-    res.status(200).send(dataToJs);
+    res.status(200).json(dataToJs);
   });
 });
 
+// POST
 app.post("/addHero", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   if (
@@ -44,16 +41,17 @@ app.post("/addHero", (req, res) => {
 
       res
         .status(201)
-        .send({ msg: "Your hero successfully added to the database." });
+        .json({ msg: "Your hero successfully added to the database." });
     });
   } else {
-    res.status(400).send({
+    res.status(400).json({
       error:
         "Age has to be a number. Gender has to be male or female. name can not be empty.",
     });
   }
 });
 
+// DELETE
 app.delete("/heros/:id", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
@@ -66,13 +64,14 @@ app.delete("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).send({ msg: "Successfuly deleted." });
+      res.status(201).json({ msg: "Successfuly deleted." });
     } else {
-      res.status(400).send({ error: "id does not exists" });
+      res.status(400).json({ error: "id does not exists" });
     }
   });
 });
 
+// Patch
 app.patch("/heros/:id", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
@@ -91,13 +90,14 @@ app.patch("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).send({ msg: "Successfuly updated." });
+      res.status(201).json({ msg: "Successfuly updated." });
     } else {
-      res.status(400).send({ error: "id does not exists" });
+      res.status(400).json({ error: "id does not exists" });
     }
   });
 });
 
+// PUT
 app.put("/heros/:id", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
@@ -116,7 +116,7 @@ app.put("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).send({ msg: "Successfuly updated." });
+      res.status(201).json({ msg: "Successfuly updated." });
     } else {
       if (
         req.body.name !== "" &&
@@ -136,9 +136,9 @@ app.put("/heros/:id", (req, res) => {
           console.log(err);
         });
 
-        res.status(201).send({ msg: "Successfuly created." });
+        res.status(201).json({ msg: "Successfuly created." });
       } else {
-        res.status(400).send({
+        res.status(400).json({
           error:
             "Age has to be a number. Gender has to be male or female. name can not be empty.",
         });
