@@ -23,7 +23,7 @@ http://localhost:3000/heros
 
 | status code | type                                             |
 | ----------- | ------------------------------------------------ |
-| 201         | [{"id":1,"name":"sam","age":10,"gender":"male"}] |
+| 200         | [{"id":1,"name":"sam","age":10,"gender":"male"}] |
 
 ```json
 // example
@@ -32,6 +32,39 @@ http://localhost:3000/heros
   { "id": 2, "name": "amir", "age": 12, "gender": "male" }
 ]
 ```
+
+## GET (name)
+
+http://localhost:3000/heros/name/:id
+
+### response
+
+| status code | type                          |
+| ----------- | ----------------------------- |
+| 200         | "Sam"                         |
+| 400         | {error: "id does not exists"} |
+
+## GET (age)
+
+http://localhost:3000/heros/age/:id
+
+### response
+
+| status code | type                          |
+| ----------- | ----------------------------- |
+| 200         | 12                            |
+| 400         | {error: "id does not exists"} |
+
+## GET (gender)
+
+http://localhost:3000/heros/gender/:id
+
+### response
+
+| status code | type                          |
+| ----------- | ----------------------------- |
+| 200         | "male"                        |
+| 400         | {error: "id does not exists"} |
 
 ## POST
 
@@ -49,7 +82,7 @@ http://localhost:3000/addHero
 
 | status code | type                                                                                       |
 | ----------- | ------------------------------------------------------------------------------------------ |
-| 201         | { msg: "Your hero successfully added to the database." }                                   |
+| 200         | { msg: "Your hero successfully added to the database." }                                   |
 | 400         | {error: "Age has to be a number. Gender has to be male or female. name can not be empty."} |
 
 ## DELETE
@@ -66,7 +99,7 @@ http://localhost:3000/heros/:id
 
 | status code | type                            |
 | ----------- | ------------------------------- |
-| 201         | { msg: "Successfuly deleted." } |
+| 200         | { msg: "Successfuly deleted." } |
 | 400         | {error: "id does not exists"}   |
 
 ## PATCH
@@ -86,7 +119,7 @@ http://localhost:3000/heros/:id
 
 | status code | type                            |
 | ----------- | ------------------------------- |
-| 201         | { msg: "Successfuly updated." } |
+| 200         | { msg: "Successfuly updated." } |
 | 400         | {error: "id does not exists"}   |
 
 ## PUT
@@ -106,6 +139,6 @@ http://localhost:3000/heros/:id
 
 | status code | type                            |
 | ----------- | ------------------------------- |
-| 201         | { msg: "Successfuly created." } |
-| 201         | { msg: "Successfuly updated." } |
+| 200         | { msg: "Successfuly created." } |
+| 200         | { msg: "Successfuly updated." } |
 | 400         | {error: "id does not exists"}   |

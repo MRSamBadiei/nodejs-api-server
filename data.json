@@ -1,4 +1,6 @@
 [
   { "id": 1, "name": "sam", "age": 10, "gender": "male" },
-  { "id": 2, "name": "amir", "age": 12, "gender": "male" }
+  { "id": 2, "name": "amir", "age": 12, "gender": "male" },
+  { "id": 3, "name": "jafar", "age": "2", "gender": "male" },
+  { "id": 4, "name": "kkkk", "age": "jj22", "gender": "male" }
 ]

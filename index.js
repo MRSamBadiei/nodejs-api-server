@@ -7,13 +7,28 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// GET
+// GET (id,name,age,gender)
 app.get("/heros", (req, res) => {
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
-    res.status(201).json(dataToJs);
+    res.status(200).json(dataToJs);
   });
+});
+
+// GET (name) by (id)
+app.get("/heros/name/:id", (req, res) => {
+  findByid(req.params.id, "name", res);
+});
+
+// GET (age) by (id)
+app.get("/heros/age/:id", (req, res) => {
+  findByid(req.params.id, "age", req, res);
+});
+
+// GET (gender) by (id)
+app.get("/heros/gender/:id", (req, res) => {
+  findByid(req.params.id, "gender", req, res);
 });
 
 // POST
@@ -29,7 +44,7 @@ app.post("/addHero", (req, res) => {
     fs.readFile("data.json", "utf8", (err, data) => {
       const dataToJs = JSON.parse(data);
       dataToJs.push({
-        id: dataToJs.length + 1,
+        id: findNextNum(dataToJs),
         name: req.body.name,
         age: req.body.age,
         gender: req.body.gender,
@@ -40,7 +55,7 @@ app.post("/addHero", (req, res) => {
       });
 
       res
-        .status(201)
+        .status(200)
         .json({ msg: "Your hero successfully added to the database." });
     });
   } else {
@@ -64,7 +79,7 @@ app.delete("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).json({ msg: "Successfuly deleted." });
+      res.status(200).json({ msg: "Successfuly deleted." });
     } else {
       res.status(400).json({ error: "id does not exists" });
     }
@@ -90,7 +105,7 @@ app.patch("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).json({ msg: "Successfuly updated." });
+      res.status(200).json({ msg: "Successfuly updated." });
     } else {
       res.status(400).json({ error: "id does not exists" });
     }
@@ -116,7 +131,7 @@ app.put("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(201).json({ msg: "Successfuly updated." });
+      res.status(200).json({ msg: "Successfuly updated." });
     } else {
       if (
         req.body.name !== "" &&
@@ -150,3 +165,22 @@ app.put("/heros/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Running on ${PORT}`);
 });
+
+// kind = name,age,gender
+function findByid(id, kind, res) {
+  res.set({ "Transfer-Encdoing": "chunked" });
+  fs.readFile("data.json", "utf8", (err, data) => {
+    const dataToJs = JSON.parse(data);
+    const findID = dataToJs.findIndex((e) => e.id == id);
+
+    if (findID !== -1) {
+      res.status(200).json(dataToJs[findID][kind]);
+    }
+
+    res.status(400).json({ error: "id does not exists" });
+  });
+}
+
+function findNextNum(data) {
+  return Math.max(...data.map((e) => e.id)) + 1;
+}

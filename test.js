@@ -1,18 +1,14 @@
 // npm install axios
 
-/*
 const axios = require("axios");
 
 axios
-  .put("http://localhost:3000/heros/2", {
-    name: "sam",
-    age: 10,
-    gender: "male",
+  .patch("http://localhost:3000/heros/4", {
+    age: "jj22",
   })
   .then((e) => {
-    console.log(e);
+    console.log(e.data);
   })
   .catch((e) => {
     console.log(e);
   });
-*/
