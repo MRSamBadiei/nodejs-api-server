@@ -3,7 +3,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+//note
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -59,8 +59,8 @@ app.post("/addHero", (req, res) => {
       });
 
       res
-        .status(200)
-        .json({  data: newData,msg: "Your hero successfully added to the database."}); 
+        .status(201)
+        .json({ msg: "Your hero successfully added to the database." });
     });
   } else {
     res.status(400).json({
@@ -136,7 +136,7 @@ app.put("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(200).json({ msg: "Successfuly updated." });
+      res.status(204).json({ msg: "Successfuly updated." });
     } else {
       if (
         req.body.name !== "" &&
