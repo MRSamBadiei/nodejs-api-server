@@ -15,21 +15,24 @@ app.get("/heros", (req, res) => {
     res.status(200).json(dataToJs);
   });
 });
+// GET all details (id, name, age, gender) by (id)
+app.get("/heros/:id", (req, res) => {
+  fs.readFile("data.json", "utf8", (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Internal Server Error" });
+    } else {
+      const dataToJs = JSON.parse(data);
+      const hero = dataToJs.find((item) => item.id == req.params.id);
 
-// GET (name) by (id)
-app.get("/heros/name/:id", (req, res) => {
-  findByid(req.params.id, "name", res);
+      if (hero) {
+        res.status(200).json(hero);
+      } else {
+        res.status(404).json({ error: "Hero not found" });
+      }
+    }
+  });
 });
 
-// GET (age) by (id)
-app.get("/heros/age/:id", (req, res) => {
-  findByid(req.params.id, "age", req, res);
-});
-
-// GET (gender) by (id)
-app.get("/heros/gender/:id", (req, res) => {
-  findByid(req.params.id, "gender", req, res);
-});
 
 // POST
 app.post("/addHero", (req, res) => {
@@ -43,12 +46,13 @@ app.post("/addHero", (req, res) => {
   ) {
     fs.readFile("data.json", "utf8", (err, data) => {
       const dataToJs = JSON.parse(data);
-      dataToJs.push({
+      const newData = {
         id: findNextNum(dataToJs),
         name: req.body.name,
         age: req.body.age,
         gender: req.body.gender,
-      });
+      }
+      dataToJs.push(newData);
 
       fs.writeFile("data.json", JSON.stringify(dataToJs), (err) => {
         console.log(err);
@@ -114,6 +118,7 @@ app.patch("/heros/:id", (req, res) => {
 
 // PUT
 app.put("/heros/:id", (req, res) => {
+  console.log(req.params.id);
   res.set({ "Transfer-Encdoing": "chunked" });
   fs.readFile("data.json", "utf8", (err, data) => {
     const dataToJs = JSON.parse(data);
