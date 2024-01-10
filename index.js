@@ -59,7 +59,7 @@ app.post("/addHero", (req, res) => {
       });
 
       res
-        .status(200)
+        .status(201)
         .json({  data: newData,msg: "Your hero successfully added to the database."}); 
     });
   } else {
@@ -136,7 +136,7 @@ app.put("/heros/:id", (req, res) => {
         console.log(err);
       });
 
-      res.status(200).json({ msg: "Successfuly updated." });
+      res.status(204).json({ msg: "Successfuly updated." });
     } else {
       if (
         req.body.name !== "" &&
