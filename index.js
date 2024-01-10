@@ -3,7 +3,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+//note
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
